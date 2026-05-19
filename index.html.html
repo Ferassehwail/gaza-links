@@ -1,0 +1,1475 @@
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0f8f58">
+    <title>الروابط الموثوقة لمواطني قطاع غزة</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@500;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --primary: #16a064;
+            --primary-dark: #087046;
+            --primary-soft: #e9fff4;
+            --accent: #ef4444;
+            --ink: #163247;
+            --muted: #6b7b8c;
+            --line: #dce7df;
+            --card: rgba(255, 255, 255, 0.88);
+            --shadow: 0 18px 45px rgba(22, 50, 71, 0.12);
+            --radius: 22px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            direction: rtl;
+            color: var(--ink);
+            font-family: 'Tajawal', Arial, sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(22, 160, 100, 0.18), transparent 34rem),
+                radial-gradient(circle at bottom left, rgba(8, 112, 70, 0.12), transparent 28rem),
+                linear-gradient(180deg, #f7fbf8 0%, #eef6f1 100%);
+        }
+
+        a { color: inherit; }
+
+        .page-shell {
+            width: min(1180px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 28px 0 22px;
+        }
+
+        .hero {
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(22, 160, 100, 0.18);
+            border-radius: 30px;
+            padding: 34px 28px;
+            background:
+                linear-gradient(135deg, rgba(255,255,255,0.93), rgba(233,255,244,0.86)),
+                radial-gradient(circle at 18% 18%, rgba(22,160,100,0.16), transparent 15rem);
+            box-shadow: var(--shadow);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: auto -70px -95px auto;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: rgba(22, 160, 100, 0.13);
+        }
+
+        .badge-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            color: var(--primary-dark);
+            background: #ffffff;
+            border: 1px solid rgba(22, 160, 100, 0.18);
+            font-weight: 800;
+            box-shadow: 0 8px 22px rgba(22, 160, 100, 0.10);
+        }
+
+
+        .hero-top-row {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .visits-counter-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 218px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            color: #ffffff;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: 1px solid rgba(255, 255, 255, 0.38);
+            box-shadow: 0 14px 28px rgba(8, 112, 70, 0.20);
+        }
+
+        .visits-counter-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.18);
+            font-size: 1.2rem;
+        }
+
+        .visits-counter-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            line-height: 1.25;
+        }
+
+        .visits-counter-label {
+            font-size: 0.82rem;
+            font-weight: 800;
+            opacity: 0.92;
+        }
+
+        .visits-counter-number {
+            font-family: 'Noto Kufi Arabic', 'Tajawal', sans-serif;
+            font-size: 1.18rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .visits-counter-card.is-updating .visits-counter-icon {
+            animation: visitPulse 1s ease-in-out infinite;
+        }
+
+        h1 {
+            margin: 18px 0 10px;
+            font-family: 'Noto Kufi Arabic', 'Tajawal', sans-serif;
+            font-size: clamp(1.65rem, 4vw, 2.7rem);
+            line-height: 1.5;
+            color: var(--ink);
+            letter-spacing: -0.04em;
+        }
+
+        .hero-text {
+            margin: 0;
+            max-width: 820px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.9;
+            font-weight: 500;
+        }
+
+        .toolbar {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            margin: 18px 0 22px;
+            padding: 12px;
+            border-radius: 24px;
+            border: 1px solid rgba(22, 160, 100, 0.16);
+            background: rgba(247, 251, 248, 0.82);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 12px 35px rgba(22, 50, 71, 0.08);
+        }
+
+        .search-box-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+        }
+
+        .search-box-wrapper:focus-within {
+            border-color: rgba(22, 160, 100, 0.75);
+            box-shadow: 0 0 0 5px rgba(22, 160, 100, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .search-icon {
+            width: 56px;
+            min-width: 56px;
+            display: grid;
+            place-items: center;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        #search-box {
+            width: 100%;
+            border: 0;
+            outline: none;
+            padding: 16px 0 16px 18px;
+            color: var(--ink);
+            background: transparent;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: right;
+        }
+
+        #search-box::placeholder { color: #99a6b3; font-weight: 500; }
+
+        .summary-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 0 4px 18px;
+            color: var(--muted);
+            font-weight: 800;
+        }
+
+        .summary-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 13px;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.78);
+            border: 1px solid rgba(22, 160, 100, 0.14);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            position: relative;
+            min-height: 210px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding: 22px;
+            background: var(--card);
+            border: 1px solid rgba(22, 160, 100, 0.18);
+            border-radius: var(--radius);
+            box-shadow: 0 14px 32px rgba(22, 50, 71, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            animation: cardIn 0.45s ease both;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 auto;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), #71d89f);
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(22, 160, 100, 0.45);
+            box-shadow: 0 22px 48px rgba(22, 50, 71, 0.14);
+        }
+
+        .new-label {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            z-index: 3;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 58px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #ef4444, #f97316);
+            color: #fff;
+            font-size: 0.82rem;
+            font-weight: 900;
+            box-shadow: 0 10px 22px rgba(239, 68, 68, 0.24);
+        }
+
+        .card-title {
+            margin: 18px 0 18px;
+            padding-left: 62px;
+            color: #0d8b57;
+            font-family: 'Noto Kufi Arabic', 'Tajawal', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            line-height: 1.9;
+        }
+
+        .card:not(.new-card) .card-title { padding-left: 0; }
+
+        .card-actions {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-width: 118px;
+            min-height: 46px;
+            padding: 12px 18px;
+            border-radius: 14px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 900;
+            box-shadow: 0 12px 24px rgba(22, 160, 100, 0.22);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.04);
+            box-shadow: 0 16px 30px rgba(22, 160, 100, 0.28);
+        }
+
+        .link-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #e45757;
+            font-size: 0.88rem;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .empty-state {
+            display: none;
+            margin: 26px auto 0;
+            padding: 28px;
+            text-align: center;
+            color: var(--muted);
+            background: #fff;
+            border: 1px dashed rgba(22, 160, 100, 0.3);
+            border-radius: var(--radius);
+            font-weight: 800;
+        }
+
+        .footer-card {
+            margin: 24px 0 6px;
+            padding: 16px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            text-align: center;
+            border-radius: 22px;
+            color: var(--ink);
+            background: rgba(255,255,255,0.86);
+            border: 1px solid rgba(22, 160, 100, 0.18);
+            box-shadow: var(--shadow);
+            font-family: 'Noto Kufi Arabic', 'Tajawal', sans-serif;
+            font-weight: 700;
+        }
+
+
+        .swal2-title-custom,
+        .swal2-html-custom,
+        .swal2-confirm-button-custom { font-family: 'Tajawal', Arial, sans-serif !important; }
+
+        .swal2-title-custom { font-weight: 800; font-size: 28px; }
+        .swal2-html-custom { font-weight: 600; line-height: 1.9; }
+        .swal2-confirm-button-custom { font-weight: 800; background: var(--primary) !important; border-radius: 12px !important; }
+
+        @keyframes cardIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes visitPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        @media (max-width: 1100px) {
+            .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        /* On phones, including many large/landscape mobile screens, show only one card per row. */
+        @media (max-width: 900px) {
+            .cards-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 640px) {
+            .page-shell {
+                width: min(100% - 20px, 1180px);
+                padding-top: 12px;
+            }
+
+            .hero {
+                border-radius: 22px;
+                padding: 24px 16px;
+            }
+
+            .hero-top-row {
+                align-items: stretch;
+            }
+
+            .badge-top,
+            .visits-counter-card {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .visits-counter-card {
+                min-width: 0;
+            }
+
+            h1 {
+                font-size: 1.45rem;
+                line-height: 1.7;
+            }
+
+            .hero-text { font-size: 0.95rem; }
+
+            .toolbar {
+                top: 0;
+                margin: 12px 0 16px;
+                border-radius: 18px;
+                padding: 8px;
+            }
+
+            .search-box-wrapper { border-radius: 15px; }
+            .search-icon { width: 46px; min-width: 46px; }
+            #search-box { padding: 14px 0 14px 12px; font-size: 0.95rem; }
+
+            .summary-row {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                gap: 8px;
+                margin: 0 0 12px;
+                font-size: 0.82rem;
+            }
+
+            .summary-pill {
+                flex: 1 1 0;
+                min-width: 0;
+                justify-content: center;
+                gap: 5px;
+                padding: 8px 7px;
+                text-align: center;
+                white-space: nowrap;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .card {
+                min-height: auto;
+                padding: 18px 16px;
+                border-radius: 18px;
+            }
+
+            .card-title {
+                margin-top: 16px;
+                padding-left: 56px;
+                font-size: 0.98rem;
+                line-height: 1.85;
+            }
+
+            .card-actions {
+                align-items: stretch;
+                flex-direction: column-reverse;
+                gap: 10px;
+            }
+
+            .btn {
+                width: 100%;
+                min-height: 48px;
+            }
+
+            .link-date {
+                justify-content: center;
+                white-space: normal;
+                font-size: 0.86rem;
+            }
+
+            .footer-card {
+                font-size: 0.95rem;
+            }
+        }
+        @media (max-width: 380px) {
+            .summary-row {
+                font-size: 0.76rem;
+                gap: 6px;
+            }
+
+            .summary-pill {
+                padding-inline: 5px;
+                gap: 4px;
+            }
+        }
+
+    </style>
+
+    <script>
+        window.addEventListener('load', function() {
+            if (typeof Swal !== 'undefined' && !sessionStorage.getItem('popupDisplayed')) {
+                Swal.fire({
+                    title: '<span class="swal2-title-custom">مرحبًا</span>',
+                    html: '<span class="swal2-html-custom">نهديكم هذا العمل بكل حب واهتمام، آملين أن يعكس روح الإبداع ويكون تجربة مميزة لكم، وأن يترك بصمة جميلة لدى المستخدمين. <br><br>تصميم وتنفيذ: م. فراس محمد سحويل</span>',
+                    icon: 'success',
+                    confirmButtonText: 'حسنًا',
+                    customClass: { confirmButton: 'swal2-confirm-button-custom' }
+                }).then(function() {
+                    sessionStorage.setItem('popupDisplayed', 'true');
+                });
+            }
+
+            const searchInput = document.getElementById('search-box');
+            const cards = Array.from(document.querySelectorAll('.card'));
+            const visibleCount = document.getElementById('visible-count');
+            const emptyState = document.getElementById('empty-state');
+
+            const visitsCounter = document.getElementById('visits-counter');
+            const visitsCounterCard = document.getElementById('visits-counter-card');
+
+            function formatArabicNumber(value) {
+                const number = Number(value || 0);
+                return number.toLocaleString('en-US');
+            }
+
+            function updateVisitsCounter(countOnly) {
+                if (!visitsCounter) return;
+
+                const endpoint = '?visit_counter=1' + (countOnly ? '&count_only=1' : '');
+                if (visitsCounterCard) visitsCounterCard.classList.add('is-updating');
+
+                fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                    cache: 'no-store'
+                })
+                    .then(function(response) { return response.json(); })
+                    .then(function(data) {
+                        if (data && typeof data.total !== 'undefined') {
+                            visitsCounter.textContent = formatArabicNumber(data.total);
+                        }
+                    })
+                    .catch(function() {})
+                    .finally(function() {
+                        if (visitsCounterCard) visitsCounterCard.classList.remove('is-updating');
+                    });
+            }
+
+            updateVisitsCounter(false);
+            setInterval(function() {
+                updateVisitsCounter(true);
+            }, 20000);
+
+            function normalizeText(value) {
+                return (value || '')
+                    .toString()
+                    .toLowerCase()
+                    .replace(/[أإآ]/g, 'ا')
+                    .replace(/ى/g, 'ي')
+                    .replace(/ة/g, 'ه')
+                    .replace(/[ًٌٍَُِّْ]/g, '')
+                    .trim();
+            }
+
+            function filterCards() {
+                const filter = normalizeText(searchInput.value);
+                let count = 0;
+
+                cards.forEach(function(card) {
+                    const text = normalizeText(card.getAttribute('data-search'));
+                    const match = !filter || text.includes(filter);
+                    card.style.display = match ? 'flex' : 'none';
+                    if (match) count++;
+                });
+
+                if (visibleCount) visibleCount.textContent = count;
+                if (emptyState) emptyState.style.display = count === 0 ? 'block' : 'none';
+            }
+
+            if (searchInput) searchInput.addEventListener('input', filterCards);
+            filterCards();
+        });
+    </script>
+</head>
+<body>
+
+
+
+    <main class="page-shell">
+        <section class="hero" aria-labelledby="page-title">
+            <div class="hero-top-row">
+                <div class="badge-top">🔗 روابط موثوقة ومحدثة</div>
+                <div class="visits-counter-card" id="visits-counter-card" aria-label="عداد الزيارات">
+                    <span class="visits-counter-icon" aria-hidden="true">👁️</span>
+                    <span class="visits-counter-content">
+                        <span class="visits-counter-label">عدد الزيارات</span>
+                        <span class="visits-counter-number" id="visits-counter">12567,942</span>
+                    </span>
+                </div>
+            </div>
+            <h1 id="page-title">الروابط الموثوقة - قطاع غزة</h1>
+            <p class="hero-text">جميع الروابط المهمة بشكل سريع وبدون إعلانات.</p>
+        </section>
+
+        <section class="toolbar" aria-label="البحث في الروابط">
+            <div class="search-box-wrapper">
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input type="text" id="search-box" placeholder="ابحث في الروابط، مثال: أيتام، تنمية، أونروا" autocomplete="off">
+            </div>
+        </section>
+
+        <div class="summary-row">
+            <span class="summary-pill">📌 عدد الروابط: 85</span>
+            <span class="summary-pill">👁️ النتائج الظاهرة: <span id="visible-count">85</span></span>
+        </div>
+
+        <section class="cards-grid" aria-label="قائمة الروابط">
+                                            <article class="card new-card" data-search="ابحث بالاسم عن شهداء قطاع غزة 24-04-2026">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">ابحث بالاسم عن شهداء قطاع غزة</h2>
+
+                    <div class="card-actions">
+                        <a href="https://baker.lvendr.xyz/t/gaza-martyrs/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 24-04-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="التسجيل في فرص العمل المؤقتة (جوب ماتش) 31-03-2026">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">التسجيل في فرص العمل المؤقتة (جوب ماتش)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://jobmatch.ps/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 31-03-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="فحص المستفيدين (جمعية البركة الجزائرية) 31-03-2026">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">فحص المستفيدين (جمعية البركة الجزائرية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://albaraka-gaza.org/check" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 31-03-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="فحص الاسم في كشوفات الغاز 31-03-2026">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">فحص الاسم في كشوفات الغاز</h2>
+
+                    <div class="card-actions">
+                        <a href="https://e-gaza.com/check" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 31-03-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل مساعدة نقدية (إنقاذ الطفل) 31-03-2026">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل مساعدة نقدية (إنقاذ الطفل)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://kobo-ee.savethechildren.net/x/eQOeVYsP" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 31-03-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تحديث البيانات (الأونروا) 31-03-2026">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تحديث البيانات (الأونروا)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://gazaaid.unrwa.org/Login/Index" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 31-03-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تحديث البيانات في وزارة التنمية الاجتماعية (غزة) 31-03-2026">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تحديث البيانات في وزارة التنمية الاجتماعية (غزة)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://services.citizen.egaza.ps/login" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 31-03-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="التسجيل في رابط الـ1250 شيكل (التنمية رام الله) 31-03-2026">
+                    
+                    <h2 class="card-title">التسجيل في رابط الـ1250 شيكل (التنمية رام الله)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://donate.mosd.gov.ps/war-form?fbclid=IwY2xjawGultJleHRuA2FlbQIxMAABHWn2lRGY17H4PRUOp3r9M0PqrEL7N8idhCdltASSH_a-zPpaQLuHo39TeA_aem_YHufbkDonYxmcZv6LmyEJQ" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 31-03-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="التسجيل في برنامج الغذاء العالمي (WFP) 31-03-2026">
+                    
+                    <h2 class="card-title">التسجيل في برنامج الغذاء العالمي (WFP)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://pal.beneficiaryregistration.cbt.wfp.org/landing" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 31-03-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="نموذج التواصل مع برنامج الغذاء العالمي (WFP) 31-03-2026">
+                    
+                    <h2 class="card-title">نموذج التواصل مع برنامج الغذاء العالمي (WFP)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://aidhotline.wfp.org/palestine.html" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 31-03-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="جميع الخدمات الإلكترونية لوزارة الصحة (منظومة صحتي) 23-01-2026">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">جميع الخدمات الإلكترونية لوزارة الصحة (منظومة صحتي)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://www.sehatty.ps/public/#electronic-services" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 23-01-2026</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="نموذج تحديث بيانات الجرحى (وزارة الصحة) 29-12-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">نموذج تحديث بيانات الجرحى (وزارة الصحة)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://forms.sehatty.ps/public/register_injuried" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 29-12-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل الأيتام (قرية السنابل) 11-12-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل الأيتام (قرية السنابل)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf2uY6SKtx7cLHKDcULZFugjG_JBn1hbknqPlSy4NbszQu-Hw/viewform" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 11-12-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل المواطنين (جمعية المستقبل للبيئة والتنمية) 11-12-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل المواطنين (جمعية المستقبل للبيئة والتنمية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://aid.fade-pal.org/public/index.php/registration" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 11-12-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="نظام الاستعلام عن الطرود المصرية لأهالي مدينة رفح 11-12-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">نظام الاستعلام عن الطرود المصرية لأهالي مدينة رفح</h2>
+
+                    <div class="card-actions">
+                        <a href="https://murafah.org/aid-system/public/aid/food-check" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 11-12-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (برنامج الناجي الوحيد) 11-12-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (برنامج الناجي الوحيد)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://reacheducationfund.com/reg-sole-survivors/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 11-12-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="مؤسسة نور الحياة للمرأة والطفل 11-12-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">مؤسسة نور الحياة للمرأة والطفل</h2>
+
+                    <div class="card-actions">
+                        <a href="https://script.google.com/macros/s/AKfycbxPC629Mx2e080Dzbai2pds4-SE46wmgsIsPc5_LrP5KRhYHvoetOlG1Oi9DrUafM2pzg/exec?page=register" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 11-12-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="الاستعلام عن المركبات والرخصة (وزارة النقل والمواصلات) 05-11-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">الاستعلام عن المركبات والرخصة (وزارة النقل والمواصلات)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://eservices.mot.ps/portal/user_profile/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 05-11-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (المنظومة الوطنية للأيتام) 04-11-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (المنظومة الوطنية للأيتام)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://orphan.mosa.egaza.ps/auth/login" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 04-11-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل المواطنين في جمعية قطوف الخير 04-11-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل المواطنين في جمعية قطوف الخير</h2>
+
+                    <div class="card-actions">
+                        <a href="https://aid.kotof.org/public/index.php/registration" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 04-11-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="التسجيل في جمعية الفجر الشبابي الفلسطيني 04-11-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">التسجيل في جمعية الفجر الشبابي الفلسطيني</h2>
+
+                    <div class="card-actions">
+                        <a href="https://reg.fajeryouth.org/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 04-11-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="نموذج الاستفادة من المكملات الغذائية في شمال القطاع (مؤسسة ميديا جلوبال) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">نموذج الاستفادة من المكملات الغذائية في شمال القطاع (مؤسسة ميديا جلوبال)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://forms.office.com/pages/responsepage.aspx?id=BhhPFTa8SEO9Niu7RRwVrPdwsUVMZK5Ko9LPCIIn9TZUN0hDTTJOSDBWSTNYMFRFU0JESDc4VVZITS4u&amp;route=shorturl" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="التسجيل في برنامج سوء التغذية (مجلس كنائس الشرق الأوسط) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">التسجيل في برنامج سوء التغذية (مجلس كنائس الشرق الأوسط)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfKFYsETNs1QN74oJgI9IAcCJ1wV3Rz70C4hzJzURQgZpiXYA/viewform" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="التسجيل في برنامج سوء التغذية (مؤسسة جذور) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">التسجيل في برنامج سوء التغذية (مؤسسة جذور)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://ee.kobotoolbox.org/M0JqEwK0?fbclid=IwQ0xDSwKoDf9leHRuA2FlbQIxMQABHipkO_gMiu7bXDY0JcOaRcYkDAOjCsi8WfrMoVlKdLBxg4AFjfDMXcbuhW7r_aem_Oeo1AMghhc7uiASWk_IakQ" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل المواطنين (جمعية الجليل للتنمية والتطوير) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل المواطنين (جمعية الجليل للتنمية والتطوير)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfqVQbv2bsHgLY0vagBAZ-ptNQpWYPe20NInyLH5C6wUJ5ViQ/viewform" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل المواطنين (جمعية الصداقة الفلسطينية التركية) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل المواطنين (جمعية الصداقة الفلسطينية التركية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfDaTG5eqYxbub32xDmxSDQ8UgzkCDvNDlj27-tOwSDlIQR7w/formResponse" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تحديث بيانات المواطنين المسجلين (المركز السعودي الثقافي) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title"> تحديث بيانات المواطنين المسجلين (المركز السعودي الثقافي)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://portal.ksach.org/beneficial-update" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="للبحث عن اسمك في كشوفات الغاز (بوت تليجرام) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">للبحث عن اسمك في كشوفات الغاز (بوت تليجرام)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://t.me/gaza_gazbot" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="متابعة كشوفات الغاز (مجموعة تليجرام) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">متابعة كشوفات الغاز (مجموعة تليجرام)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://t.me/gas_gaza1" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل الأطفال المولودين (منظومة الطفولة الوطنية) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل الأطفال المولودين (منظومة الطفولة الوطنية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://inquiry.egaza.ps/kids/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (جمعية تطوير الأسرة الخيرية في شمال القطاع) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (جمعية تطوير الأسرة الخيرية في شمال القطاع)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSeN6Q0PCTGcGLbi3D48y22NBKCp9qL-Jci9C6q_6xiOts8yCA/viewform" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (جمعية دار السبيل) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (جمعية دار السبيل)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSex-vTGc9WEUU4gZWbSD88ZuQZKaiFJ-RMjXwt5oYLrTe7hqQ/viewform" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (مؤسسة الوطن) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (مؤسسة الوطن)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://ee.kobotoolbox.org/single/jAGbauPt" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (جمعية فلسطين الغد) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (جمعية فلسطين الغد)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdIHwhoyM3n-bYn2t-f23TedXXNASu4iyBl_7okKWzYPp88wQ/viewform" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (معهد الأمل للأيتام) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (معهد الأمل للأيتام)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdD6X9dZhA7uXR9vitQtDlPsWQpFas-_-Ltw-QWmUqKdC2HZQ/viewform" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (جمعية فلسطين التربوية) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (جمعية فلسطين التربوية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/u/0/d/e/1FAIpQLSfKsYdTwqBOnsT8hZDAFmHSpI3G7SzX6ypSMCyElv2dJjnnHQ/viewform?pli=1" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (جمعية قطوف الخير) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (جمعية قطوف الخير)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://kotof.org/ar/orphans_form" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل الأطفال للحليب والبامبرز (المركز السعودي الثقافي) 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل الأطفال للحليب والبامبرز (المركز السعودي الثقافي)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://portal.ksach.org/children" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل المواطنين في جمعية أوتاد الخيرية 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل المواطنين في جمعية أوتاد الخيرية</h2>
+
+                    <div class="card-actions">
+                        <a href="https://awtad.ngo/forms/pal/donations-distribution" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="خدمة التسجيل في منظومة الغاز لكافة محافظات قطاع غزة 26-10-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">خدمة التسجيل في منظومة الغاز لكافة محافظات قطاع غزة</h2>
+
+                    <div class="card-actions">
+                        <a href="https://www.e-gaza.com/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-10-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل المواطنين في جمعية السنابل 28-06-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل المواطنين في جمعية السنابل</h2>
+
+                    <div class="card-actions">
+                        <a href="https://aid.alsanabel.org/public/registration" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 28-06-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="التسجيل في مؤسسة ساعد للتنمية 28-06-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">التسجيل في مؤسسة ساعد للتنمية</h2>
+
+                    <div class="card-actions">
+                        <a href="https://a.saiid.org/aid-form" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 28-06-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="الاستعلام عن بيانات المتوفى (وزارة الصحة) 06-04-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">الاستعلام عن بيانات المتوفى (وزارة الصحة)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://sehatty.ps/public/check_dead_data" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 06-04-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="الصفحة الموحدة لخدمات الإغاثة والأضرار (وزارة الاتصالات) 16-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">الصفحة الموحدة لخدمات الإغاثة والأضرار (وزارة الاتصالات)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://eportal.gov.ps/allServices/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 16-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="الاستفادة من المساعدات (جمعية التغريد للثقافة والتنمية) 15-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">الاستفادة من المساعدات (جمعية التغريد للثقافة والتنمية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://aid.altagreedpal.com/public/index.php/registration" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 15-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="خدمات مستشفى أصدقاء المريض 12-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">خدمات مستشفى أصدقاء المريض</h2>
+
+                    <div class="card-actions">
+                        <a href="https://eservices.pfbs.ps/login" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 12-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="حصر أضرار أنظمة الطاقة الشمسية (سلطة الطاقة غزة) 12-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">حصر أضرار أنظمة الطاقة الشمسية (سلطة الطاقة غزة)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://e.services.gov.ps/apps/solar_energy_damages/1/create" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 12-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (مؤسسة هيومن أبيل أستراليا) 09-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (مؤسسة هيومن أبيل أستراليا)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://www.haipal.ps" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 09-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="حصر أضرار أنظمة الطاقة الشمسية (سلطة الطاقة رام الله) 09-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">حصر أضرار أنظمة الطاقة الشمسية (سلطة الطاقة رام الله)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://forms.gle/Q6uxAMtV2vLLpYvW8" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 09-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="حصر أضرار النقل والمواصلات (غزة) 09-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">حصر أضرار النقل والمواصلات (غزة)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://e.services.gov.ps/apps/trans_damage_2025/1/create" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 09-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (الجمعية الإسلامية) 09-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (الجمعية الإسلامية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://survey.isjcp.org/orphans.php" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 09-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أيتام (الأمل الجديد للتنمية) 05-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أيتام (الأمل الجديد للتنمية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://newhopehq.org/register-orphan/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 05-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="الاستعلام عن الأضرار المسجلة لدى هيئة الأشغال في غزة 03-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">الاستعلام عن الأضرار المسجلة لدى هيئة الأشغال في غزة</h2>
+
+                    <div class="card-actions">
+                        <a href="https://mpwh.egaza.ps/people/checkAdrar" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 03-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل المواطنين في جمعية رؤية شبابية 03-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل المواطنين في جمعية رؤية شبابية</h2>
+
+                    <div class="card-actions">
+                        <a href="https://new.yvs.ps/public/index.php/registration" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 03-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="نموذج الاستفادة من برامج الإغاثة (جمعية إنقاذ المستقبل الشبابي) 01-03-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">نموذج الاستفادة من برامج الإغاثة (جمعية إنقاذ المستقبل الشبابي)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://emergency.syfpal.org/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 01-03-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="التسجيل في برنامج الفارس الشهم 3 للحصول على المساعدات 28-02-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">التسجيل في برنامج الفارس الشهم 3 للحصول على المساعدات</h2>
+
+                    <div class="card-actions">
+                        <a href="https://aid.alfaresalshahm.com/sso/login" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 28-02-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تسجيل أضرار المنشآت الاقتصادية خلال حرب 2023 22-02-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تسجيل أضرار المنشآت الاقتصادية خلال حرب 2023</h2>
+
+                    <div class="card-actions">
+                        <a href="https://e.services.gov.ps/apps/eco_damage2025/1/create" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 22-02-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="بوابة الخدمات الإلكترونية (بلدية غزة) 26-01-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">بوابة الخدمات الإلكترونية (بلدية غزة)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://cs.mogaza.org/citizen/login" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 26-01-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="استبانة حصر الأضرار في غزة (وزارة الأشغال العامة والإسكان رام الله) 24-01-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">استبانة حصر الأضرار في غزة (وزارة الأشغال العامة والإسكان رام الله)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://mopwh.ps/habitation.aspx" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 24-01-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="نموذج التسجيل في الغاز لمحافظة غزة والشمال (للموزعين فقط) 23-01-2025">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">نموذج التسجيل في الغاز لمحافظة غزة والشمال (للموزعين فقط)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://e-gaza.com/distributor-requests" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 23-01-2025</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="تحديث رقم الهاتف لكافة سكان قطاع غزة 24-12-2024">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">تحديث رقم الهاتف لكافة سكان قطاع غزة</h2>
+
+                    <div class="card-actions">
+                        <a href="https://forms.gle/o8DPLCpDpA2u9bZx6" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 24-12-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="ابحث عن رسالة المساعدة الخاصة بك 18-12-2024">
+                    
+                    <h2 class="card-title">ابحث عن رسالة المساعدة الخاصة بك</h2>
+
+                    <div class="card-actions">
+                        <a href="https://baker.lvendr.xyz/aid-sms/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 18-12-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="نموذج حصر الحالات الهشة كالسرطان والإعاقات وسوء التغذية (خاص بمدينة غزة) 12-12-2024">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">نموذج حصر الحالات الهشة كالسرطان والإعاقات وسوء التغذية (خاص بمدينة غزة)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdenDf8zogiQuPDNAMoBM4s4XBWpmjQIWLx-vKX5fJvO791Fg/viewform" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 12-12-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="نظام إدارة النقاط التعليمية في قطاع غزة 11-12-2024">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">نظام إدارة النقاط التعليمية في قطاع غزة</h2>
+
+                    <div class="card-actions">
+                        <a href="https://edupoints.inspirete.net/?fbclid=IwY2xjawHGKQ1leHRuA2FlbQIxMQABHUuVAr1-pH4SbSaPEhBRVgOCwW0jZLsyrbCJybgpKym0LsWkGi08KKFQtw_aem_EgUJ08YciVsddqkgkID-rA" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 11-12-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="نموذج تقديم شكوى في هيئة مكافحة الفساد الفلسطينية 11-12-2024">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">نموذج تقديم شكوى في هيئة مكافحة الفساد الفلسطينية</h2>
+
+                    <div class="card-actions">
+                        <a href="https://www.pacc.ps/complaints/create?fbclid=IwZXh0bgNhZW0CMTEAAR0dtGOpZW09AS8SfmNEmAqKuFt6shYR0YH9NTMTwiga2hJWzXtclh2b-IY_aem_-v4WwFC7Y_cPH-Z5awwhmw" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 11-12-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card new-card" data-search="متابعة كافة أخبار التعليم في قطاع غزة عبر الواتساب 01-12-2024">
+                                            <span class="new-label">جديد</span>
+                    
+                    <h2 class="card-title">متابعة كافة أخبار التعليم في قطاع غزة عبر الواتساب</h2>
+
+                    <div class="card-actions">
+                        <a href="https://whatsapp.com/channel/0029VatZfn5G3R3iBL3EvT3g" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 01-12-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="دليل المحلات التي تقبل الدفع البنكي في قطاع غزة 20-11-2024">
+                    
+                    <h2 class="card-title">دليل المحلات التي تقبل الدفع البنكي في قطاع غزة</h2>
+
+                    <div class="card-actions">
+                        <a href="https://nocashgaza.wuaze.com/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 20-11-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="التسجيل في المساعدات العينية (المركز السعودي للثقافة والتراث) 15-11-2024">
+                    
+                    <h2 class="card-title">التسجيل في المساعدات العينية (المركز السعودي للثقافة والتراث)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://portal.ksach.org/beneficial-update" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 15-11-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="رابط الدعم الفني لحل جميع مشكلات المدارس الافتراضية لطلاب قطاع غزة 10-11-2024">
+                    
+                    <h2 class="card-title">رابط الدعم الفني لحل جميع مشكلات المدارس الافتراضية لطلاب قطاع غزة</h2>
+
+                    <div class="card-actions">
+                        <a href="https://support.inspirete.net/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 10-11-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="رابط الرزم التعليمية لطلاب قطاع غزة 05-11-2024">
+                    
+                    <h2 class="card-title">رابط الرزم التعليمية لطلاب قطاع غزة</h2>
+
+                    <div class="card-actions">
+                        <a href="https://www.moe.edu.ps/gaza/subjects" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 05-11-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="تسجيل أيتام (الجمعية الخيرية لدعم الأسرة الفلسطينية) 02-09-2024">
+                    
+                    <h2 class="card-title">تسجيل أيتام (الجمعية الخيرية لدعم الأسرة الفلسطينية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://forms.gle/Y4FZVEAVzKhgQBJb8" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="شرح الانضمام للصفوف الافتراضية لطلاب قطاع غزة 02-09-2024">
+                    
+                    <h2 class="card-title">شرح الانضمام للصفوف الافتراضية لطلاب قطاع غزة</h2>
+
+                    <div class="card-actions">
+                        <a href="https://www.facebook.com/Bak3r1997/videos/367564039761641" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="التبليغ عن الشهداء والمفقودين (وزارة الصحة) 02-09-2024">
+                    
+                    <h2 class="card-title">التبليغ عن الشهداء والمفقودين (وزارة الصحة)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://sehatty.ps/moh-registration/public/add-order" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="نموذج حصر حالات بتر الأطراف (وزارة الصحة) 02-09-2024">
+                    
+                    <h2 class="card-title">نموذج حصر حالات بتر الأطراف (وزارة الصحة)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://www.sehatty.ps/public/patient_form" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="تسجيل أسرى سكان قطاع غزة 02-09-2024">
+                    
+                    <h2 class="card-title">تسجيل أسرى سكان قطاع غزة</h2>
+
+                    <div class="card-actions">
+                        <a href="https://cda.gov.ps/gaza/" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="تسجيل أيتام (مؤسسة التعاون) 02-09-2024">
+                    
+                    <h2 class="card-title">تسجيل أيتام (مؤسسة التعاون)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://orphans.taawon.org" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="تسجيل أيتام (هيئة الأعمال الخيرية العالمية) 02-09-2024">
+                    
+                    <h2 class="card-title">تسجيل أيتام (هيئة الأعمال الخيرية العالمية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfa-HzRMUG6n0oKvWKdPqW3_oUuD8p73Y_UQg89bCctl9T1cw/viewform?sfnsn=scwspmo&amp;fbclid=IwY2xjawEd8ltleHRuA2FlbQIxMQABHUwKdApEj_YIxi8jVV7dxN3S0hYLmjqQw8vIJ-ik5bey-0Q0Hr_fyq88VA_aem_nV0tvVYBuxu6YIt97EB-Ww" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="تسجيل أيتام (مؤسسة هيومن أبيل بريطانيا) 02-09-2024">
+                    
+                    <h2 class="card-title">تسجيل أيتام (مؤسسة هيومن أبيل بريطانيا)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScmBr7blNNrdqbDXAUU9O5HayP9F5Y2wlxWxontMLTBpOW48Q/viewform" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="تسجيل أيتام (جمعية ساعد) 02-09-2024">
+                    
+                    <h2 class="card-title">تسجيل أيتام (جمعية ساعد)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://forms.saiid.org/orphan-form" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="تسجيل أيتام (جمعية أمة) 02-09-2024">
+                    
+                    <h2 class="card-title">تسجيل أيتام (جمعية أمة)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/1PCPAdlNHG9aALcfllhj5n9tdARWqvH8AdtwKY2YVRvw/viewform?fbclid=IwZXh0bgNhZW0CMTEAAR29OLkol2qs6qW1E1udevW3gxV9ZCMkcjXrPhXh7E2iI1nHmTEmRGAKN6s_aem_ARDKydkUpRGvnMplSHXQZ5qr6k77W55oCnMCPFpwA3w8Pfojh2ZWVUmWrbWIPnOwltGeobnP3pmvWxGwqVovXoHO&amp;edit_requested=true" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="تسجيل أيتام (جمعية الوئام الخيرية) 02-09-2024">
+                    
+                    <h2 class="card-title">تسجيل أيتام (جمعية الوئام الخيرية)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSf0OAJnluTeiF4VlM1wtcvASbuIYzJtnXNB4Mn1J4lL-odysQ/viewform" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="تسجيل أيتام (مؤسسة وافا للتنمية وبناء القدرات) 02-09-2024">
+                    
+                    <h2 class="card-title">تسجيل أيتام (مؤسسة وافا للتنمية وبناء القدرات)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://krcs.wafaagroup.org/NewBeneficiary" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="حصر أضرار المركبات (وزارة النقل والمواصلات) 02-09-2024">
+                    
+                    <h2 class="card-title">حصر أضرار المركبات (وزارة النقل والمواصلات)</h2>
+
+                    <div class="card-actions">
+                        <a href="https://lod.mot.gov.ps/signup.php" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="نموذج الاستفادة من الغاز لخدمة غواطس المياه 02-09-2024">
+                    
+                    <h2 class="card-title">نموذج الاستفادة من الغاز لخدمة غواطس المياه</h2>
+
+                    <div class="card-actions">
+                        <a href="https://e-gaza.com/water-gas?fbclid=IwZXh0bgNhZW0CMTEAAR0dQ0GDygzU9Z9ZhyPNScSb4zIBOAz8qdne58mDtaRy_hbyusnnN_LL4Ho_aem_yU3owVQfLfdM6eO7ON1kUg" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                                            <article class="card" data-search="نموذج الاستفادة من الغاز لخدمة المخابز 02-09-2024">
+                    
+                    <h2 class="card-title">نموذج الاستفادة من الغاز لخدمة المخابز</h2>
+
+                    <div class="card-actions">
+                        <a href="https://e-gaza.com/bakery-form" class="btn" target="_blank" rel="noopener noreferrer">فتح الرابط ←</a>
+                                                    <span class="link-date">🗓️ تاريخ الإضافة: 02-09-2024</span>
+                                            </div>
+                </article>
+                    </section>
+
+        <div id="empty-state" class="empty-state">لا توجد نتائج مطابقة لعبارة البحث الحالية.</div>
+
+        <footer class="footer-card">
+            <span>© تصميم المهندس فراس محمد سحويل </span>
+
+        </footer>
+    </main>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1a09ef8a34cf4ef9911950035033cc39","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
